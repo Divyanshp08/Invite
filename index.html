@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Krittika's 18th Birthday</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Sacramento&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.postimg.cc/brM1yH58/white-silver-glittery-pattern-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .content {
+      color: #cc3399;
+      padding: 2rem;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .dropdown-group {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: #cc3399;
+    }
+
+    select {
+      margin-left: 0.8rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 2px solid #cc3399;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .button-group {
+      margin-top: 2rem;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      margin: 0.5rem;
+      background: linear-gradient(to right, #ff99cc, #ff66b2);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff66b2;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(to right, #ff66b2, #ff3385);
+    }
+
+    iframe {
+      margin-top: 2rem;
+      border: 0;
+      width: 90%;
+      max-width: 600px;
+      height: 450px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(204, 51, 153, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="main-content" class="content">
+    <h1>You're Invited!</h1>
+    <h2>Krittika's 18th Birthday Bash ✨</h2>
+    <p>★ A sparkling night awaits you full of glam, love, and magic ★</p>
+    <p><strong>Date:</strong> 31st July</p>
+    <p><strong>Time:</strong> 5:30 PM onwards</p>
+    <p><strong>Venue:</strong> <a href="https://share.google/8DZFpvpQCVxVvXksD" target="_blank" style="color: #cc3399; text-decoration: underline;">Gola Sizzlers, Ambience Mall</a></p>
+
+    <div class="dropdown-group">
+      <label for="name-select"><strong>Your Name:</strong></label>
+      <select id="name-select">
+        <option value="" disabled selected>Select your name</option>
+		<option value="Gauri">Gauri</option>
+		<option value="Govind">Govind</option>
+		<option value="Mritunyjay">Mritunyjay</option>
+		<option value="Shreyansh">Shreyansh</option>
+		<option value="Jayin">Jayin</option>	
+		<option value="Eliza">Eliza</option>
+		<option value="Blake">Blake</option>
+		<option value="Payoja">Payoja</option>
+		<option value="Neeharika">Neeharika</option>
+		<option value="Hasini">Hasini</option>
+		<option value="Banaj">Banaj</option>
+		<option value="Prajnay">Prajnay</option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button onclick="sendVote('yes')">Yes</button>
+      <button onclick="sendVote('no')">No</button>
+    </div>
+
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.9400898513163!2d77.15037278126003!3d28.541520413096155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0314df9bffff%3A0xdb77e2a71da3f85c!2sGola%20Sizzlers!5e0!3m2!1sen!2sin!4v1753373006810!5m2!1sen!2sin"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+  <script>
+    function sendVote(answer) {
+      const nameSelect = document.getElementById('name-select');
+      const name = nameSelect.value;
+
+      if (!name) {
+        alert("Please select your name!");
+        return;
+      }
+
+      fetch('http://localhost:3000/vote', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, answer })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (answer === "yes") {
+          document.getElementById('main-content').innerHTML = `
+            <div style="padding: 2rem;">
+              <div style="font-family: 'Sacramento', cursive; font-size: 3rem; color: #F4B8DA; font-weight: bold; letter-spacing: 1px;">
+                🔫 Good Choice
+              </div>
+              <p style="font-size: 1.3rem; margin: 1rem 0 0 0; color: #F4B8DA; font-weight:500;">Gift khud nahi lena, main bataungi</p>
+              <p style="font-size: 1.1rem; color: #F4B8DA;">Idc, it's my birthday, my choice</p>
+              <p style="font-size: 1.1rem; color: #F4B8DA;">Mein Besharam Hoon</p>
+              <p style="font-weight: bold; color: #F4B8DA;">Warna Mein Murder Kar Deti</p>
+            </div>
+          `;
+        } else {
+          document.getElementById('main-content').innerHTML = `
+            <div style="padding: 2rem;">
+              <div style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #F4B8DA; font-weight: bold; letter-spacing: 1px;">
+                No Wrong Answer Allowed Hi Nahi Hai
+              </div>
+              <p style="font-size: 1.15rem; color: #F4B8DA;">Yes mein badlo, woh toh bas formality ke liye pucha tha.</p>
+            </div>
+          `;
+        }
+      })
+      .catch(err => {
+        alert("There was an error saving your RSVP!");
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
