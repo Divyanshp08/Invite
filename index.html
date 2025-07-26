@@ -110,18 +110,18 @@
       <label for="name-select"><strong>Your Name:</strong></label>
       <select id="name-select">
         <option value="" disabled selected>Select your name</option>
-		<option value="Gauri">Gauri</option>
-		<option value="Govind">Govind</option>
-		<option value="Mritunyjay">Mritunyjay</option>
-		<option value="Shreyansh">Shreyansh</option>
-		<option value="Jayin">Jayin</option>	
-		<option value="Eliza">Eliza</option>
-		<option value="Blake">Blake</option>
-		<option value="Payoja">Payoja</option>
-		<option value="Neeharika">Neeharika</option>
-		<option value="Hasini">Hasini</option>
-		<option value="Banaj">Banaj</option>
-		<option value="Prajnay">Prajnay</option>
+        <option value="Gauri">Gauri</option>
+        <option value="Govind">Govind</option>
+        <option value="Mritunyjay">Mritunyjay</option>
+        <option value="Shreyansh">Shreyansh</option>
+        <option value="Jayin">Jayin</option>
+        <option value="Eliza">Eliza</option>
+        <option value="Blake">Blake</option>
+        <option value="Payoja">Payoja</option>
+        <option value="Neeharika">Neeharika</option>
+        <option value="Hasini">Hasini</option>
+        <option value="Banaj">Banaj</option>
+        <option value="Prajnay">Prajnay</option>
       </select>
     </div>
 
@@ -148,9 +148,9 @@
         return;
       }
 
-	  fetch('https://invite-1-gc0o.onrender.com/vote', {
+      fetch('https://invite-1-gc0o.onrender.com/vote', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, answer })
       })
       .then(res => res.json())
