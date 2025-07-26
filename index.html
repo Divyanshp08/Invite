@@ -76,9 +76,14 @@
       transition: transform 0.3s ease, background 0.3s ease;
     }
 
-    button:hover {
+    button:hover:not(:disabled) {
       transform: scale(1.05);
       background: linear-gradient(to right, #ff66b2, #ff3385);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
 
     iframe {
@@ -126,8 +131,8 @@
     </div>
 
     <div class="button-group">
-      <button onclick="sendVote('yes')">Yes</button>
-      <button onclick="sendVote('no')">No</button>
+      <button id="yes-btn" onclick="sendVote('yes')">Yes</button>
+      <button id="no-btn" onclick="sendVote('no')">No</button>
     </div>
 
     <iframe
@@ -140,6 +145,8 @@
 
   <script>
     function sendVote(answer) {
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn = document.getElementById('no-btn');
       const nameSelect = document.getElementById('name-select');
       const name = nameSelect.value;
 
@@ -148,12 +155,23 @@
         return;
       }
 
+      // Disable buttons while sending
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+
+      console.log("Sending vote:", { name, answer });
+
       fetch('https://invite-1-gc0o.onrender.com/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, answer })
       })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Server error: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         if (answer === "yes") {
           document.getElementById('main-content').innerHTML = `
@@ -180,7 +198,10 @@
       })
       .catch(err => {
         alert("There was an error saving your RSVP!");
-        console.error(err);
+        console.error("Error:", err);
+        // Re-enable buttons on error so user can try again
+        yesBtn.disabled = false;
+        noBtn.disabled = false;
       });
     }
   </script>
